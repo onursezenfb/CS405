@@ -2,7 +2,7 @@ let data = [];
 
 Papa.parse('data.csv', {
     download: true,
-    header: true, // Set to false if your CSV doesn't have a header row
+    header: true,
     dynamicTyping: true, // Convert numeric and boolean strings to their types
     skipEmptyLines: true,
     complete: function(results) {
@@ -19,27 +19,24 @@ Papa.parse('data.csv', {
         const gap = 40;
 
 
-        console.log(data);
         data.forEach((entry, idx) => {
 
             // Create a bar for each entry
             const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-            rect.setAttribute('x', idx * (barWidth + gap) + gap); // 10 for spacing
-            rect.setAttribute('y', 950 - entry.no_of_suicides * yScale); // SVG (0,0) is top-left
+            rect.setAttribute('x', idx * (barWidth + gap) + gap);
+            rect.setAttribute('y', 950 - entry.no_of_suicides * yScale);
             rect.setAttribute('width', barWidth);
             rect.setAttribute('height', entry.no_of_suicides * yScale);
             rect.setAttribute('fill', 'blue');
             svg.appendChild(rect);
             
-            const height = (entry.no_of_suicides / yMax) * 800; 
             const bar_data_text = document.createElementNS("http://www.w3.org/2000/svg", 'text');
             bar_data_text.setAttribute('x', -((idx * (barWidth + gap)) + 50 + (barWidth / 3)));
-            bar_data_text.setAttribute('y', -880); // Adjust "20" to position text inside bar
+            bar_data_text.setAttribute('y', -880);
             bar_data_text.setAttribute('text-anchor', 'middle');
             bar_data_text.setAttribute('font-size', '50px');
             bar_data_text.setAttribute('fill', 'white');
             bar_data_text.setAttribute('writing-mode', 'tb');
-
             bar_data_text.setAttribute('transform', 'rotate(180)');
             bar_data_text.textContent = entry.no_of_suicides;
             svg.appendChild(bar_data_text);
@@ -82,7 +79,6 @@ Papa.parse('data.csv', {
             // Create a circle for each data point for the line graph
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             circle.setAttribute('cx', idx * (barWidth + gap) + gap + barWidth / 2);
-            console.log(parseFloat(entry.crude_suicide_rate));
             circle.setAttribute('cy', 1000 - parseFloat(entry.crude_suicide_rate) * yScaleRate); // Adjust scale as needed
             circle.setAttribute('r', 7);
             circle.setAttribute('fill', 'red');
@@ -100,14 +96,13 @@ Papa.parse('data.csv', {
         });
         
         let pathData = "M" + (gap + barWidth / 2) + " " + (1000 - parseFloat(data[0].crude_suicide_rate) * yScaleRate); // Start point
-        // Create the path for the line graph (this is a bit trickier)
+
         data.forEach((entry, idx) => {
-            console.log('here');
             if (idx > 0) {
                 pathData += " L " + (idx * (barWidth + gap) + gap + barWidth / 2) + " " + (1000 - parseFloat(entry.crude_suicide_rate) * yScaleRate);
             }
         });
-        console.log(pathData)
+
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', pathData);
         path.setAttribute('fill', 'none');
@@ -141,7 +136,7 @@ Papa.parse('data.csv', {
 
         const right_legend_circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         right_legend_circle.setAttribute('cx', 1220);
-        right_legend_circle.setAttribute('cy', 1090); // Adjust scale as needed
+        right_legend_circle.setAttribute('cy', 1090);
         right_legend_circle.setAttribute('r', 7);
         right_legend_circle.setAttribute('fill', 'red');
         svg.appendChild(right_legend_circle);
