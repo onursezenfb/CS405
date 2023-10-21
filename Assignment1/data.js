@@ -48,6 +48,7 @@ data.forEach((entry, idx) => {
     bar_data_text.setAttribute('transform', 'rotate(180)');
     bar_data_text.textContent = entry.no_of_suicides;
     svg.appendChild(bar_data_text);
+
     const year_text = document.createElementNS("http://www.w3.org/2000/svg", 'text');
     year_text.setAttribute('x', (idx * (barWidth + gap)) + 50 + (barWidth / 3));
     year_text.setAttribute('y', 1000);
@@ -57,6 +58,7 @@ data.forEach((entry, idx) => {
     year_text.setAttribute('fill', 'white');
     year_text.textContent = entry.year;
     svg.appendChild(year_text);
+
     const left_line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
     left_line.setAttribute('style', "stroke:white;stroke-width:2");
     left_line.setAttribute('x1', "15");
