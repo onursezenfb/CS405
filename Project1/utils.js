@@ -209,7 +209,7 @@ function getModelViewMatrix() {
  * The next 5 seconds, the cube should return to its initial position.
  */
 function getPeriodicMovement(startTime) {
-    const animationDuration = 0.001 * 1000; // 10 seconds in milliseconds
+    const animationDuration = 10 * 1000; // 10 seconds in milliseconds
     identityMatrix = createIdentityMatrix();
     providedMatrix = new Float32Array([
         0.1767766922712326,
