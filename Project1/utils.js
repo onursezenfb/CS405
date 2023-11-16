@@ -180,21 +180,28 @@ function getModelViewMatrix() {
     const rotationMatrixY = createRotationMatrix_Y(rotationY);
     const rotationMatrixZ = createRotationMatrix_Z(rotationZ);
 
-    transformationMatrix.set(multiplyMatrices(transformationMatrix, translastionMatrix), 0);
-    console.log("Translated");
-    console.log(transformationMatrix);
-    transformationMatrix.set(multiplyMatrices(transformationMatrix, scalingMatrix), 0);
-    console.log("Scaled");
-    console.log(transformationMatrix);
-    transformationMatrix.set(multiplyMatrices(transformationMatrix, rotationMatrixX), 0);
-    console.log("Rotation-X");
-    console.log(transformationMatrix);
-    transformationMatrix.set(multiplyMatrices(transformationMatrix, rotationMatrixY), 0);
-    console.log("Rotation-Y");
-    console.log(transformationMatrix);
-    transformationMatrix.set(multiplyMatrices(transformationMatrix, rotationMatrixZ), 0);
+    transformationMatrix.set(multiplyMatrices(rotationMatrixZ, transformationMatrix), 0);
     console.log("Rotation-Z");
     console.log(transformationMatrix);
+
+    transformationMatrix.set(multiplyMatrices(rotationMatrixY, transformationMatrix), 0);
+    console.log("Rotation-Y");
+    console.log(transformationMatrix);
+
+    transformationMatrix.set(multiplyMatrices(rotationMatrixX, transformationMatrix), 0);
+    console.log("Rotation-X");
+    console.log(transformationMatrix);
+    
+
+    transformationMatrix.set(multiplyMatrices(translastionMatrix, transformationMatrix), 0);
+    console.log("Translated");
+    console.log(transformationMatrix);
+
+    transformationMatrix.set(multiplyMatrices(scalingMatrix, transformationMatrix), 0);
+    console.log("Scaled");
+    console.log(transformationMatrix);
+    
+    
 
     return transformationMatrix;
 
@@ -211,24 +218,7 @@ function getModelViewMatrix() {
 function getPeriodicMovement(startTime) {
     const animationDuration = 10 * 1000; // 10 seconds in milliseconds
     identityMatrix = createIdentityMatrix();
-    providedMatrix = new Float32Array([
-        0.1767766922712326,
-        -0.3061861991882324,
-        0.3535533845424652,
-        0.30000001192092896,
-        0.4633883237838745,
-        0.06341324001550674,
-        -0.1767766922712326,
-        -0.25,
-        0.12682649493217468,
-        0.7803300619125366,
-        0.6123723983764648,
-        0,
-        0,
-        0,
-        0,
-        1
-    ]);
+    providedMatrix = getModelViewMatrix();
     currentTime = Date.now();
     const elapsed = (currentTime - startTime) % animationDuration;
     const halfDuration = animationDuration / 2;
