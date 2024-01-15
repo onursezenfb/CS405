@@ -176,6 +176,8 @@ void main()
 	spec = pow(max(dot(reflection, viewDirection), 0.0), phongExp);
 	diff = max(dot(normal, lightdir), 0.0);
 
+	vec3 lightning = ambient * vec3(1.0,1.0,1.0) + diff * vec3(1.0,1.0,1.0) + spec * vec3(1.0,1.0,1.0);
+
 	// PLEASE DO NOT CHANGE ANYTHING BELOW !!!
 	/////////////////////////////////////////////////////////////////////////////
 	
